@@ -15,9 +15,20 @@ export function CartProvider({ children }) {
       setCartItems((cartItems) => [...cartItems, { ...item, cartQuantity: 1 }]);
     }
   };
-  
+
+  const removeFromCart = (item) => {
+    const selectedItem = cartItems.find(({ id }) => id === item.id);
+    if (selectedItem.cartQuantity > 1) {
+      selectedItem.cartQuantity -= 1;
+      setCartItems((cartItems) => [...cartItems]);
+    } else {
+      const filteredCartItems = cartItems.filter(({ id }) => id != item.id);
+      setCartItems(filteredCartItems);
+    }
+  };
+
   return (
-    <CartContext.Provider value={{ cartItems, addToCart }}>
+    <CartContext.Provider value={{ cartItems, addToCart, removeFromCart }}>
       {children}
     </CartContext.Provider>
   );

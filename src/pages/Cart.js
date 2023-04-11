@@ -2,7 +2,7 @@ import { useContext } from "react";
 import { CartContext } from "../context/CartProvider";
 
 export function Cart() {
-  const { cartItems } = useContext(CartContext);
+  const { cartItems, removeFromCart } = useContext(CartContext);
 
   const totalItems = cartItems.reduce(
     (acc, cartItem) => acc + cartItem.cartQuantity,
@@ -10,10 +10,10 @@ export function Cart() {
   );
   return (
     <>
-      <h1>Items in cart</h1>
-      <h2>Total Items: {totalItems}</h2>
-      {cartItems.map(
-        ({
+      <h1>Items in cart : {totalItems} items</h1>
+
+      {cartItems.map((cartItem) => {
+        const {
           id,
           name,
           description,
@@ -22,18 +22,22 @@ export function Cart() {
           category,
           brand,
           cartQuantity,
-        }) => (
+        } = cartItem;
+        return (
           <div key={id}>
             <h3>{name}</h3>
             <p>{description}</p>
             <p>Price: ${price}</p>
-            <h4>Quantity in cart: {cartQuantity}</h4>
+            <p>Quantity in cart: {cartQuantity}</p>
+            <button onClick={() => removeFromCart(cartItem)}>
+              Remove from cart
+            </button>
 
             <br />
             <br />
           </div>
-        )
-      )}
+        );
+      })}
     </>
   );
 }
