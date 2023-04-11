@@ -8,8 +8,10 @@ export function About({ products }) {
   const getProductDetails = (productId, products) =>
     products.find((product) => product.id === Number(productId));
 
+  const selectedProduct = getProductDetails(productId, products);
+
   const { id, name, description, price, quantity, category, brand } =
-    getProductDetails(productId, products);
+    selectedProduct;
 
   return (
     <>

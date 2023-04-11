@@ -7,6 +7,7 @@ export function ProductListingPage({ products }) {
   return (
     <>
       <h1>Product Listing Page</h1>
+      
       {products.map((product) => {
         const { id, name, description, price, quantity, category, brand } =
           product;
