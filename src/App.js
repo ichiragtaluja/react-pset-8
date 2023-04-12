@@ -1,5 +1,5 @@
 import "./App.css";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useNavigate } from "react-router-dom";
 import { ProductListingPage } from "./pages/ProductListingPage";
 import { About } from "./pages/About";
 import { WishList } from "./pages/WishList";
@@ -11,15 +11,17 @@ import { Header } from "./components/Header";
 
 function App() {
   const [products, setProducts] = useState([]);
+
+  const navigate = useNavigate();
   const getProducts = async () => {
     try {
-      const response = await fakeFetch("https://example.com/api/products");
+      const response = await fakeFetch("https://example.com/api/product");
 
       if (response.status === 200) {
         setProducts(response.data.products);
       }
     } catch (error) {
-      console.log(error);
+      navigate("/error");
     }
   };
 
@@ -43,7 +45,7 @@ function App() {
         />
         <Route path="/wishlist" element={<WishList />} />
         <Route path="/cart" element={<Cart />} />
-        <Route path="/error" element={<Error />} />
+        {<Route path="/error" element={<Error />} />}
       </Routes>
     </div>
   );
