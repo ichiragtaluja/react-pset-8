@@ -15,7 +15,7 @@ function App() {
   const navigate = useNavigate();
   const getProducts = async () => {
     try {
-      const response = await fakeFetch("https://example.com/api/product");
+      const response = await fakeFetch("https://example.com/api/products");
 
       if (response.status === 200) {
         setProducts(response.data.products);
