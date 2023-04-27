@@ -11,8 +11,9 @@ import { Header } from "./components/Header";
 
 function App() {
   const [products, setProducts] = useState([]);
+  const [status, setStatus] = useState();
 
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const getProducts = async () => {
     try {
       const response = await fakeFetch("https://example.com/api/products");
@@ -21,7 +22,7 @@ function App() {
         setProducts(response.data.products);
       }
     } catch (error) {
-      navigate("/error");
+      setStatus(true);
     }
   };
 
@@ -34,7 +35,16 @@ function App() {
       <Header />
 
       <Routes>
-        <Route path="/" element={<ProductListingPage products={products} />} />
+        <Route
+          path="/"
+          element={
+            products.length > 0 ? (
+              <ProductListingPage products={products} />
+            ) : (
+              <Error />
+            )
+          }
+        />
         <Route
           path="/products"
           element={<ProductListingPage products={products} />}
@@ -45,7 +55,7 @@ function App() {
         />
         <Route path="/wishlist" element={<WishList />} />
         <Route path="/cart" element={<Cart />} />
-        {<Route path="/error" element={<Error />} />}
+        <Route path="/*" element={<Error />} />
       </Routes>
     </div>
   );
